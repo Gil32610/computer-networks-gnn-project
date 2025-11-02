@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  pyg_trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+              
+    
+    stdin_open: true
+    tty: true
+    
+    
+    container_name: pyg_gpu_trainer
