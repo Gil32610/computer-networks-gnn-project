@@ -29,7 +29,7 @@ class UNSWNB15Dataset(Dataset):
     def raw_file_name(self):
         if self.train:
             return '../data/train/unsw_training-set_multi-label-preprocessing.csv'
-        else :
+        else:
             return '../data/test/unsw_test-set_multi-label-preprocessing.csv'
         
     @property
@@ -38,12 +38,12 @@ class UNSWNB15Dataset(Dataset):
         return [f'data_cluster_{split}_{i}.pt' for i in range(self.num_samples)]
     
     def _load_data(self):
-      return pd.read_csv(self.raw_file_name, skiprows=1).values
+      return pd.read_csv(self.raw_file_name, skiprows=1, header=None).values
         
     
     def process(self):
         neighborhood = NearestNeighbors(n_neighbors=self.num_neighbors, algorithm='auto') 
-        features, labels = self.original_data[:,-10:], self.original_data[:,:-10]
+        features, labels = self.original_data[:,:-10], self.original_data[:,-10:]
         neighborhood.fit(features)
         
         for i in range(self.num_samples):
