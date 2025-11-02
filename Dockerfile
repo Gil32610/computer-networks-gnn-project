@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir \
 RUN pip install --no-cache-dir torch_geometric
 
 
-RUN pip install --no-cache-dir pandas numpy scikit-learn
+RUN pip install --no-cache-dir pandas numpy scikit-learn matplotlib seaborn
 
 
 CMD ["/bin/bash"]
