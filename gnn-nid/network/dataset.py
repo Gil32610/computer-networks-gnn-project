@@ -13,9 +13,12 @@ class UNSWNB15Dataset(Dataset):
                  transform=None, 
                  pre_transform=None, 
                  pre_filter=None, 
-                 train=True
+                 train=True,
+                 require_download=False
                  ):
+        self.url = 'https://github.com/hyqya/Preprocessed-multi-label-dataset/blob/main/UNSW-NB15%20multi-label%20dataset.zip'
         self.train = train
+        self.require_download = require_download
         self.num_neighbors = num_neighbors        
         self.original_data = self._load_data()
         self.num_samples = self.original_data.shape[0]
@@ -27,8 +30,8 @@ class UNSWNB15Dataset(Dataset):
         if self.train:
             return '../data/train/unsw_training-set_multi-label-preprocessing.csv'
         else :
-            return 'data/test/unsw_test-set_multi-label-preprocessing.csv'
-    
+            return '../data/test/unsw_test-set_multi-label-preprocessing.csv'
+        
     @property
     def processed_file_names(self):
         split = 'train' if self.train else 'test'
