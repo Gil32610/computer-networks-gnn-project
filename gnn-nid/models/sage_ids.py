@@ -25,5 +25,6 @@ class SAGEAttackClassifier(torch.nn.Module):
         x = global_mean_pool(x, batch=batch)
         x = self.linear(x)
         x = torch.sigmoid(x)
+        return x
         
         
