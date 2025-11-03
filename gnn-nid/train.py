@@ -13,9 +13,9 @@ CRITERION = nn.BCELoss()
 
 
 def calculate_metrics(y_true, y_pred, threshold=0.5):
-    y_pred_proba = y_pred.cpu().numpy()
+    y_pred_proba = y_pred.cpu().detach().numpy()
     y_pred_binary = (y_pred_proba > threshold).astype(int)
-    y_true_np = y_true.cpu().numpy()
+    y_true_np = y_true.cpu().detach().numpy()
     
     return {
         'micro_f1': f1_score(y_true_np, y_pred_binary, average='micro', zero_division=0),
@@ -40,7 +40,7 @@ def train_epoch(model, loader, optimizer, criterion):
         
         
         loss = criterion(probabilities, batch_data.y.float())
-        
+        print(loss)
         loss.backward()
         optimizer.step()
         total_loss += loss.item() * batch_data.num_graphs
@@ -107,7 +107,7 @@ def run_training(model, train_loader, test_loader, optimizer, epochs, save_dir, 
     for epoch in range(1, epochs + 1):
         train_metrics = train_epoch(model, train_loader, optimizer, criterion)
         test_metrics = evaluate(model, test_loader, criterion)
-        
+        print(f"Training on epoc: {epoch}")
         history['epoch'].append(epoch)
         history['train_loss'].append(train_metrics['loss'])
         history['test_loss'].append(test_metrics['loss'])
